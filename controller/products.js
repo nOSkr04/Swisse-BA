@@ -190,6 +190,15 @@ exports.uploadProductThumbnail = asyncHandler(async (req, res, next) => {
 exports.uploadProductImages = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   // image upload
+  if (req.files.file != undefined) {
+    const file = req.files.file;
+    file.name = `image_${req.params.id}_image${path.parse(file1.name).ext}`;
+
+    const picture = await sharp(file.data).toFile(
+      `${process.env.FILE_UPLOAD_PATH}/${file1.name}`
+    );
+    product.images.image = file.name;
+  }
   if (req.files.file1 != undefined) {
     const file1 = req.files.file1;
     file1.name = `image_${req.params.id}_image1${path.parse(file1.name).ext}`;

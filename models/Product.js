@@ -10,6 +10,7 @@ const ProdcutSchema = new mongoose.Schema(
       default: "no-photo.jpg",
     },
     images: {
+      image: { type: String },
       image1: { type: String },
       image2: { type: String },
       image3: { type: String },
