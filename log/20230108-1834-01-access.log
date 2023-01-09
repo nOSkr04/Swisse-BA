@@ -1,0 +1,6 @@
+::1 - - [16/Dec/2022:13:52:04 +0000] "GET /api/v1/products HTTP/1.1" 200 3654 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+::1 - - [16/Dec/2022:13:52:15 +0000] "GET /api/v1/products/639b4108091c5930a895ad32 HTTP/1.1" 200 845 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+::1 - - [16/Dec/2022:13:52:16 +0000] "GET /api/v1/products HTTP/1.1" 200 3654 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36"
+::1 - - [19/Dec/2022:13:49:10 +0000] "GET /api/v1/categories HTTP/1.1" 200 3340 "-" "PostmanRuntime/7.30.0"
+::1 - - [19/Dec/2022:13:49:20 +0000] "GET /api/v1/categories/5e90434cd433fa11b078ed8a/products HTTP/1.1" 200 1764 "-" "PostmanRuntime/7.30.0"
+::1 - - [07/Jan/2023:11:00:18 +0000] "GET /api/v1/products HTTP/1.1" 200 3655 "-" "PostmanRuntime/7.30.0"

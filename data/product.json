@@ -1,0 +1,67 @@
+[
+  {
+    "title": "Swisse Kids Multi",
+    "thumbnail": "/image_639a077316a11d3bc4007ded_image1.png",
+    "price": 101250,
+    "stock": 12,
+    "description": "Swisse Kids Multi is specifically tailored children's multivitamin. These great-tasting, chewable tablets are 99.9% sugar free and provide nutritional support for general wellbeing, and maintain healthy growth and development.1",
+    "createUser": "5ea3e83bf932ea3944956bf9",
+    "category": "5e90434cd433fa11b078ed8a",
+    "subCategory": "Хүүхэд",
+    "images": {
+     "image1": "/image_639a077316a11d3bc4007ded_image2.png",
+     "image2": "/image_639a077316a11d3bc4007ded_image1.png",
+     "image3": "/image_639a077316a11d3bc4007ded_image3.png",
+     "image4": "/image_639a077316a11d3bc4007ded_image4.png"
+    }
+  },
+  {
+    "title": "Swisse MEN",
+    "thumbnail": "/image_639a077316a11d3bc4007ded_image4.png",
+    "price": 101250,
+    "stock": 12,
+    "description": "Swisse Kids Multi is specifically tailored children's multivitamin. These great-tasting, chewable tablets are 99.9% sugar free and provide nutritional support for general wellbeing, and maintain healthy growth and development.1",
+    "createUser": "5ea3e83bf932ea3944956bf9",
+    "category": "5e90434cd433fa11b078ed8a",
+    "subCategory": "Эрэгтэй",
+    "images": {
+     "image1": "/image_639a077316a11d3bc4007ded_image3.png",
+     "image2": "/image_639a077316a11d3bc4007ded_image2.png",
+     "image3": "/image_639a077316a11d3bc4007ded_image1.png",
+     "image4": "/image_639a077316a11d3bc4007ded_image4.png"
+    }
+  },
+  {
+    "title": "Swisse WOMAN",
+    "thumbnail": "/image_639a077316a11d3bc4007ded_image3.png",
+    "price": 101250,
+    "stock": 12,
+    "description": "Swisse Kids Multi is specifically tailored children's multivitamin. These great-tasting, chewable tablets are 99.9% sugar free and provide nutritional support for general wellbeing, and maintain healthy growth and development.1",
+    "createUser": "5ea3e83bf932ea3944956bf9",
+    "category": "5e90434cd433fa11b078ed8a",
+    "subCategory": "Эмэгтэй",
+    "images": {
+     "image1": "/image_639a077316a11d3bc4007ded_image1.png",
+     "image2": "/image_639a077316a11d3bc4007ded_image2.png",
+     "image3": "/image_639a077316a11d3bc4007ded_image3.png",
+     "image4": "/image_639a077316a11d3bc4007ded_image4.png"
+    }
+  },
+  {
+    "title": "Swisse MULTIVITAMIN",
+    "thumbnail": "/image_639a077316a11d3bc4007ded_image2.png",
+    "price": 101250,
+    "stock": 12,
+    "description": "Swisse Kids Multi is specifically tailored children's multivitamin. These great-tasting, chewable tablets are 99.9% sugar free and provide nutritional support for general wellbeing, and maintain healthy growth and development.1",
+    "createUser": "5ea3e83bf932ea3944956bf9",
+    "category": "5e90434cd433fa11b078ed8a",
+    "subCategory": "Витамин",
+    "images": {
+     "image1": "/image_639a077316a11d3bc4007ded_image1.png",
+     "image2": "/image_639a077316a11d3bc4007ded_image2.png",
+     "image3": "/image_639a077316a11d3bc4007ded_image3.png",
+     "image4": "/image_639a077316a11d3bc4007ded_image4.png"
+    }
+  }
+
+]
