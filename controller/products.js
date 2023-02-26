@@ -9,7 +9,7 @@ const sharp = require("sharp");
 // api/v1/products
 exports.getProducts = asyncHandler(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = parseInt(req.query.limit) || 5;
+  const limit = parseInt(req.query.limit) || 100;
   const sort = req.query.sort;
   const select = req.query.select;
 
