@@ -313,6 +313,7 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
   })
     .then((response) => {
       const token = response.data.access_token;
+      const bill =  Bill.findById(req.params._id); 
       axios({
         method: "post",
         url: "https://merchant.qpay.mn/v2/payment/check",
@@ -329,7 +330,7 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
       })
         .then(async (response) => {
           const counts = response.data.count;
-          const bill = await Bill.findById(req.params._id); 
+          
           console.log(bill)
           if (counts === 0) {
             res.status(401).json({
