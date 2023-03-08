@@ -22,7 +22,7 @@ router
 router
   .route("/callbacks/:id/:numId").get(chargeTime);
 router
-  .route("/check/challbacks/:id").get(invoiceCheck);
+  .route("/check/challbacks/:id/:numId").get(invoiceCheck);
 
 //"/api/v1/products"
 router

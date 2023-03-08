@@ -304,6 +304,7 @@ exports.chargeTime = asyncHandler(async (req, res, next) => {
   });
 });
 exports.invoiceCheck = asyncHandler(async (req, res) => {
+  console.log(req.params)
   await axios({
     method: "post",
     url: "https://merchant.qpay.mn/v2/auth/token",
@@ -313,7 +314,6 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
   })
     .then((response) => {
       const token = response.data.access_token;
-      const bill =  Bill.findById(req.params._id); 
       axios({
         method: "post",
         url: "https://merchant.qpay.mn/v2/payment/check",
@@ -331,14 +331,13 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
         .then(async (response) => {
           const counts = response.data.count;
           
-          console.log(bill)
           if (counts === 0) {
             res.status(401).json({
               success: false,
             });
           } else {
-            bill.isPayed = "Төлөгдсөн";
-            bill.save();
+            // bill.isPayed = "Төлөгдсөн";
+            // bill.save();
             res.status(200).json({
               success: true,
             });
