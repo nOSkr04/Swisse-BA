@@ -329,13 +329,16 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
         },
       })
         .then(async (response) => {
-          const checks = response
-          console.log(checks, "<===checks");
+          const counts = response.data.count
           const bill = await Bill.findById(req.params._id);
-         if(response.data.count !== 0){
+         if(counts !== 0){
           bill.isPayed = "Төлөгдсөн";
           bill.save();
          }
+         response.status(200).json({
+          success: true,
+          data: counts,
+        });
         })
         .catch((error) => {
           console.log(error, "error");
