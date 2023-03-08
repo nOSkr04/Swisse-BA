@@ -108,7 +108,6 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
   }
 
   req.body.createUser = req.userId;
-  console.log(req.body);
   const product = await Product.create(req.body);
 
   res.status(200).json({
@@ -287,11 +286,11 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
           });
         })
         .catch((error) => {
-          console.log(error.response.data, "error");
+          console.log(error, "error");
         });
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 });
 exports.chargeTime = asyncHandler(async (req, res, next) => {
@@ -347,6 +346,6 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
         });
     })
     .catch((error) => {
-      console.log(error.response.data);
+      console.log(error);
     });
 });
