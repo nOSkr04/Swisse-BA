@@ -329,8 +329,8 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
         },
       })
         .then(async (response) => {
-          const checks = response.count
-          console.log(checks);
+          const checks = response
+          console.log(checks, "<===checks");
           const bill = await Bill.findById(req.params._id);
          if(response.data.count !== 0){
           bill.isPayed = "Төлөгдсөн";
