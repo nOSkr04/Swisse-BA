@@ -336,6 +336,7 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
   })
     .then((response) => {
       const token = response.data.access_token;
+      console.log(req.params);
       axios({
         method: "post",
         url: "https://merchant.qpay.mn/v2/payment/check",
