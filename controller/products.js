@@ -6,6 +6,8 @@ const asyncHandler = require("express-async-handler");
 const paginate = require("../utils/paginate");
 const User = require("../models/User");
 const sharp = require("sharp");
+const axios = require("axios");
+const Bill = require("../models/Bill");
 // api/v1/products
 exports.getProducts = asyncHandler(async (req, res, next) => {
   const page = parseInt(req.query.page) || 1;
@@ -246,5 +248,90 @@ exports.uploadProductImages = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: product.images,
+  });
+});
+
+exports.invoiceTime = asyncHandler(async (req, res, next) => {
+  const bill = await Bill.findById(req.params.id);
+  await axios({
+    method: 'post',
+    url: 'https://merchant.qpay.mn/v2/auth/token',
+    headers: {
+      Authorization: `Basic QUxUQU5aQUFOOkxKNkZnblNn=`
+    },
+
+  }).then(response => {
+    const token = response.data.access_token;
+    console.log(req.params.id, req.body.amount);
+    axios({
+      method: 'post',
+      url: 'https://merchant.qpay.mn/v2/invoice',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      data: {
+        invoice_code: "ALTANZAAN_INVOICE",
+        sender_invoice_no: "12345678",
+        invoice_receiver_code: `${bill._id}`,
+        invoice_description:`${bill._id}`,
+        amount: req.body.amount,
+        callback_url:`https://altanzaan.org/api/v1/products/callbacks/${req.params.id}/${req.body.amount}`
+      }
+    }).then(async (response) => {
+      req.body.qrImage = response.data.qr_image
+      req.body.invoiceId = response.data.invoice_id 
+      bill.save()
+      res.status(200).json({
+        success: true,
+        data: bill
+      });
+    })
+    .catch(error => {
+      console.log(error.response.data, "error");
+    });
+  })
+  .catch(error => {
+    console.log(error.response.data);
+  });
+});
+exports.chargeTime = asyncHandler(async (req, res, next) => {
+  const profile = await Bill.findById(req.params.id);
+  console.log(req.params.numId);
+  // const wallet = await Wallet.findById(profile.invoiceId)
+  // const charge = req.query
+  // console.log(charge.qpay_payment_id)
+  // let messages = [];
+
+  // messages.push({
+  //     to: profile.expoPushToken,
+  //     sound: 'default',
+  //     body: `${(req.params.numId / 1000)} Хоногоор нэмэгдлээ`,
+  //     data: { data: "notification._id" },
+  //   })
+
+
+    // if (profile.deadline < Date.now()) {
+    //   if (req.params.numId == 100) {
+    //     profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 30
+    // } else if (req.params.numId == 150) {
+    //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 60
+    // } else if (req.params.numId == 200) {
+    //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 90
+    // } 
+    // } else {
+    //   if (req.params.numId == 100) {
+    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 30
+    // } else if (req.params.numId == 150) {
+    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 60
+    // } else if (req.params.numId == 200) {
+    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 90
+    // } 
+    // }
+
+    // profile.save()
+
+  res.status(200).json({
+    success: true,
+    data: profile,
   });
 });

@@ -9,10 +9,17 @@ const {
   updateProduct,
   uploadProductThumbnail,
   uploadProductImages,
+  invoiceTime,
+  chargeTime,
 } = require("../controller/products");
 
 
 const router = express.Router();
+
+router
+  .route("/invoice/:id").post(invoiceTime);
+router
+  .route("/callbacks/:id/:numId").get(chargeTime);
 
 //"/api/v1/products"
 router
