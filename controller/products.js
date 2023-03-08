@@ -108,7 +108,7 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
   }
 
   req.body.createUser = req.userId;
-console.log(req.body)
+  console.log(req.body);
   const product = await Product.create(req.body);
 
   res.status(200).json({
@@ -175,13 +175,13 @@ exports.updateProduct = asyncHandler(async (req, res, next) => {
 exports.uploadProductThumbnail = asyncHandler(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
   // image upload
-    const file = req.files.file;
-    file.name = `thumbnail_${req.params.id}_image1${path.parse(file.name).ext}`;
+  const file = req.files.file;
+  file.name = `thumbnail_${req.params.id}_image1${path.parse(file.name).ext}`;
 
-    const picture = await sharp(file.data).toFile(
-      `${process.env.FILE_UPLOAD_PATH}/${file.name}`
-    );
-    product.thumbnail = file.name;
+  const picture = await sharp(file.data).toFile(
+    `${process.env.FILE_UPLOAD_PATH}/${file.name}`
+  );
+  product.thumbnail = file.name;
   product.save();
   res.status(200).json({
     success: true,
@@ -252,84 +252,76 @@ exports.uploadProductImages = asyncHandler(async (req, res, next) => {
 });
 
 exports.invoiceTime = asyncHandler(async (req, res, next) => {
-  const profile = await Bill.findById(req.params.id);
+  const bill = await Bill.findById(req.params.id);
   await axios({
-    method: 'post',
-    url: 'https://merchant.qpay.mn/v2/auth/token',
+    method: "post",
+    url: "https://merchant.qpay.mn/v2/auth/token",
     headers: {
-      Authorization: `Basic QUxUQU5aQUFOOkxKNkZnblNn=`
+      Authorization: `Basic QUxUQU5aQUFOOkxKNkZnblNn=`,
     },
-
-  }).then(response => {
-    const token = response.data.access_token;
-    console.log(req.body.amount);
-    axios({
-      method: 'post',
-      url: 'https://merchant.qpay.mn/v2/invoice',
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      data: {
-        invoice_code: "ALTANZAAN_INVOICE",
-        sender_invoice_no: "12345678",
-        invoice_receiver_code: `${profile._id}`,
-        invoice_description:`${profile._id}`,
-        amount: req.body.amount,
-        callback_url:`https://altanzaan.org/api/v1/products/callbacks/${req.params.id}/${req.body.amount}`
-      }
-    }).then(async (response) => {
-      profile.urls = response.data.urls
-      profile.qrImage = response.data.qr_image
-      profile.invoiceId = response.data.invoice_id
-      profile.save()
-      res.status(200).json({
-        success: true,
-        data: profile
-      });
-    })
-    .catch(error => {
-      console.log(error.response.data, "error");
-    });
   })
-  .catch(error => {
-    console.log(error.response.data);
-  });
+    .then((response) => {
+      const token = response.data.access_token;
+      axios({
+        method: "post",
+        url: "https://merchant.qpay.mn/v2/invoice",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          invoice_code: "ALTANZAAN_INVOICE",
+          sender_invoice_no: "12345678",
+          invoice_receiver_code: `${bill._id}`,
+          invoice_description: `${bill._id}`,
+          amount: req.body.amount,
+          callback_url: `https://altanzaan.org/api/v1/products/callbacks/${req.params.id}/${req.body.amount}`,
+        },
+      })
+        .then(async (response) => {
+          bill.urls = response.data.urls;
+          bill.qrImage = response.data.qr_image;
+          bill.invoiceId = response.data.invoice_id;
+          bill.save();
+          res.status(200).json({
+            success: true,
+            data: bill,
+          });
+        })
+        .catch((error) => {
+          console.log(error.response.data, "error");
+        });
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
 });
 exports.chargeTime = asyncHandler(async (req, res, next) => {
-  const profile = await Bill.findById(req.params.id);
-  console.log(req.params.numId);
+  const bill = await Bill.findById(req.params.id);
+  
   // const wallet = await Wallet.findById(profile.invoiceId)
   // const charge = req.query
   // console.log(charge.qpay_payment_id)
-  // let messages = [];
+  bill.isPayed = "Төлөгдсөн";
+  bill.save();
+  // if (profile.deadline < Date.now()) {
+  //   if (req.params.numId == 100) {
+  //     profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 30
+  // } else if (req.params.numId == 150) {
+  //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 60
+  // } else if (req.params.numId == 200) {
+  //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 90
+  // }
+  // } else {
+  //   if (req.params.numId == 100) {
+  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 30
+  // } else if (req.params.numId == 150) {
+  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 60
+  // } else if (req.params.numId == 200) {
+  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 90
+  // }
+  // }
 
-  // messages.push({
-  //     to: profile.expoPushToken,
-  //     sound: 'default',
-  //     body: `${(req.params.numId / 1000)} Хоногоор нэмэгдлээ`,
-  //     data: { data: "notification._id" },
-  //   })
-
-
-    // if (profile.deadline < Date.now()) {
-    //   if (req.params.numId == 100) {
-    //     profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 30
-    // } else if (req.params.numId == 150) {
-    //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 60
-    // } else if (req.params.numId == 200) {
-    //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 90
-    // } 
-    // } else {
-    //   if (req.params.numId == 100) {
-    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 30
-    // } else if (req.params.numId == 150) {
-    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 60
-    // } else if (req.params.numId == 200) {
-    //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 90
-    // } 
-    // }
-
-    // profile.save()
+  // profile.save()
 
   res.status(200).json({
     success: true,

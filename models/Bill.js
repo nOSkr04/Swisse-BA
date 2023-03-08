@@ -6,29 +6,45 @@ const BillSchema = new mongoose.Schema(
     name: {
       type: String,
     },
-    isTologdson: {
-      enum: ["payed", "paying", "hurgegdsen"],
+    isPayed: {
+      enum: ["Төлөгдсөн", "Төлөгдөөгүй", "Хүргэгдсэн"],
+      type: String,
+      default: "Төлөгдөөгүй",
+    },
+    products: [
+      {
+        price: Number,
+        quantity: Number,
+        thumbnail: String,
+        title: String,
+      },
+    ],
+    district: {
       type: String,
     },
-    products: {
-      type: [String],
+    apartmentNumber: {
+      type: String,
+    },
+    floor: {
+      type: String,
+    },
+    houseCode: {
+      type: String,
+    },
+    phoneNumber: {
+      type: String,
+    },
+    locationDetail: {
+      type: String,
     },
     createdAt: {
       type: Date,
       default: Date.now,
     },
-    invoiceId:{
-      type: String
+    qrImage: {
+      type: String,
+      default: null,
     },
-    qrImage:{
-      type:String
-    },
-    urls:[{
-      name:String,
-      description: String,
-      logo: String,
-      link: String
-    }]
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
