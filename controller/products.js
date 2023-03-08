@@ -278,9 +278,7 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
         },
       })
         .then(async (response) => {
-          bill.urls = response.data.urls;
           bill.qrImage = response.data.qr_image;
-          bill.invoiceId = response.data.invoice_id;
           bill.save();
           res.status(200).json({
             success: true,
@@ -297,7 +295,6 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
 });
 exports.chargeTime = asyncHandler(async (req, res, next) => {
   const bill = await Bill.findById(req.params.id);
-  
   // const wallet = await Wallet.findById(profile.invoiceId)
   // const charge = req.query
   // console.log(charge.qpay_payment_id)
@@ -325,6 +322,6 @@ exports.chargeTime = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    data: profile,
+    data: bill,
   });
 });
