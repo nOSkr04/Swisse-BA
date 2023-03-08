@@ -11,6 +11,7 @@ const {
   uploadProductImages,
   invoiceTime,
   chargeTime,
+  invoiceCheck,
 } = require("../controller/products");
 
 
@@ -20,6 +21,8 @@ router
   .route("/invoice/:id").post(invoiceTime);
 router
   .route("/callbacks/:id/:numId").get(chargeTime);
+router
+  .route("/check/challbacks/:id").get(invoiceCheck);
 
 //"/api/v1/products"
 router

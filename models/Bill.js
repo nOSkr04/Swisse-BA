@@ -28,6 +28,9 @@ const BillSchema = new mongoose.Schema(
     floor: {
       type: String,
     },
+    invoiceId: {
+      type: String,
+    },
     houseCode: {
       type: String,
     },

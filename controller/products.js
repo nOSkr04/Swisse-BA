@@ -279,6 +279,7 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
       })
         .then(async (response) => {
           bill.qrImage = response.data.qr_image;
+          bill.invoiceId = response.data.invoice_id
           bill.save();
           res.status(200).json({
             success: true,
@@ -325,3 +326,38 @@ exports.chargeTime = asyncHandler(async (req, res, next) => {
     data: bill,
   });
 });
+exports.invoiceCheck = asyncHandler(async(req,res) => {
+  await axios({
+    method: "post",
+    url: "https://merchant.qpay.mn/v2/auth/token",
+    headers: {
+      Authorization: `Basic QUxUQU5aQUFOOkxKNkZnblNn=`,
+    },
+  })
+    .then((response) => {
+      const token = response.data.access_token;
+      axios({
+        method: "post",
+        url: "https://merchant.qpay.mn/v2/payment/check",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: {
+          object_type: "INVOICE",
+          object_id: req.params._id,
+          page_number:1,
+          page_limit: 100,
+          callback_url: `https://altanzaan.org/api/v1/products//check/challbacks/${req.params._id}`,
+        },
+      })
+        .then(async (response) => {
+         console.log(response, "checkInvoince");
+        })
+        .catch((error) => {
+          console.log(error.response.data, "error");
+        });
+    })
+    .catch((error) => {
+      console.log(error.response.data);
+    });
+})
