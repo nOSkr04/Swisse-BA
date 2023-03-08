@@ -296,37 +296,15 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
 });
 exports.chargeTime = asyncHandler(async (req, res, next) => {
   const bill = await Bill.findById(req.params.id);
-  // const wallet = await Wallet.findById(profile.invoiceId)
-  const charge = req.query
-  console.log(charge.qpay_payment_id)
-  // bill.isPayed = "Төлөгдсөн";
-  // bill.save();
-  // if (profile.deadline < Date.now()) {
-  //   if (req.params.numId == 100) {
-  //     profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 30
-  // } else if (req.params.numId == 150) {
-  //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 60
-  // } else if (req.params.numId == 200) {
-  //   profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 90
-  // }
-  // } else {
-  //   if (req.params.numId == 100) {
-  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 30
-  // } else if (req.params.numId == 150) {
-  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 60
-  // } else if (req.params.numId == 200) {
-  //     profile.deadline = profile.deadline.getTime() + 60 * 60 * 1000 * 24 * 90
-  // }
-  // }
-
-  // profile.save()
-
+  bill.isPayed = "Төлөгдсөн";
+  bill.save();
   res.status(200).json({
     success: true,
     data: bill,
   });
 });
 exports.invoiceCheck = asyncHandler(async(req,res) => {
+  
   await axios({
     method: "post",
     url: "https://merchant.qpay.mn/v2/auth/token",
@@ -336,7 +314,6 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
   })
     .then((response) => {
       const token = response.data.access_token;
-      console.log(req.params);
       axios({
         method: "post",
         url: "https://merchant.qpay.mn/v2/payment/check",
@@ -352,7 +329,13 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
         },
       })
         .then(async (response) => {
-         console.log(response.data, "checkInvoince");
+          const checks = response.count
+          console.log(checks);
+          const bill = await Bill.findById(req.params.id);
+         if(response.data.count !== 0){
+          bill.isPayed = "Төлөгдсөн";
+          bill.save();
+         }
         })
         .catch((error) => {
           console.log(error.response.data, "error");
