@@ -296,10 +296,10 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
 exports.chargeTime = asyncHandler(async (req, res, next) => {
   const bill = await Bill.findById(req.params.id);
   // const wallet = await Wallet.findById(profile.invoiceId)
-  // const charge = req.query
-  // console.log(charge.qpay_payment_id)
-  bill.isPayed = "Төлөгдсөн";
-  bill.save();
+  const charge = req.query
+  console.log(charge.qpay_payment_id)
+  // bill.isPayed = "Төлөгдсөн";
+  // bill.save();
   // if (profile.deadline < Date.now()) {
   //   if (req.params.numId == 100) {
   //     profile.deadline = Date.now() + 60 * 60 * 1000 * 24 * 30
