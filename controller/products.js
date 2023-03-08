@@ -347,7 +347,7 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
           object_id: req.params._id,
           page_number:1,
           page_limit: 100,
-          callback_url: `https://altanzaan.org/api/v1/products//check/challbacks/${req.params._id}`,
+          callback_url: `https://altanzaan.org/api/v1/products/check/challbacks/${req.params._id}`,
         },
       })
         .then(async (response) => {
