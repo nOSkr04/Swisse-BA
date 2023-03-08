@@ -345,10 +345,10 @@ exports.invoiceCheck = asyncHandler(async(req,res) => {
         },
         data: {
           object_type: "INVOICE",
-          object_id: req.params._id,
+          object_id: req.params.id,
           page_number:1,
           page_limit: 100,
-          callback_url: `https://altanzaan.org/api/v1/products/check/challbacks/${req.params._id}`,
+          callback_url: `https://altanzaan.org/api/v1/products/check/challbacks/${req.params.id}`,
         },
       })
         .then(async (response) => {
