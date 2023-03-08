@@ -252,7 +252,7 @@ exports.uploadProductImages = asyncHandler(async (req, res, next) => {
 });
 
 exports.invoiceTime = asyncHandler(async (req, res, next) => {
-  const bill = await Bill.findById(req.params.id);
+  const profile = await Bill.findById(req.params.id);
   await axios({
     method: 'post',
     url: 'https://merchant.qpay.mn/v2/auth/token',
@@ -262,7 +262,7 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
 
   }).then(response => {
     const token = response.data.access_token;
-    console.log(req.params.id, req.body.amount);
+    console.log(req.body.amount);
     axios({
       method: 'post',
       url: 'https://merchant.qpay.mn/v2/invoice',
@@ -272,18 +272,19 @@ exports.invoiceTime = asyncHandler(async (req, res, next) => {
       data: {
         invoice_code: "ALTANZAAN_INVOICE",
         sender_invoice_no: "12345678",
-        invoice_receiver_code: `${bill._id}`,
-        invoice_description:`${bill._id}`,
+        invoice_receiver_code: `${profile._id}`,
+        invoice_description:`${profile._id}`,
         amount: req.body.amount,
         callback_url:`https://altanzaan.org/api/v1/products/callbacks/${req.params.id}/${req.body.amount}`
       }
     }).then(async (response) => {
-      req.body.qrImage = response.data.qr_image
-      req.body.invoiceId = response.data.invoice_id 
-      bill.save()
+      profile.urls = response.data.urls
+      profile.qrImage = response.data.qr_image
+      profile.invoiceId = response.data.invoice_id
+      profile.save()
       res.status(200).json({
         success: true,
-        data: bill
+        data: profile
       });
     })
     .catch(error => {

@@ -18,6 +18,7 @@ const hpp = require("hpp");
 const categoriesRoutes = require("./routes/categories");
 const productsRoutes = require("./routes/products");
 const billsRoutes = require("./routes/bills");
+const walletsRoutes = require("./routes/wallets");
 const blogRoutes = require("./routes/blogs");
 const usersRoutes = require("./routes/users");
 const errorHandler = require("./middleware/error");
@@ -103,6 +104,7 @@ app.use("/api/v1/products", productsRoutes);
 app.use("/api/v1/blogs", blogRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/bills", billsRoutes);
+app.use("/api/v1/wallets", walletsRoutes);
 
 // Алдаа үүсэхэд барьж авч алдааны мэдээллийг клиент тал руу автоматаар мэдээлнэ
 app.use(errorHandler);

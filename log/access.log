@@ -51,3 +51,5 @@
 ::1 - - [08/Mar/2023:12:33:20 +0000] "POST /api/v1/products/invoice/6400368310dace3b2a56bdbd HTTP/1.1" 200 17134 "-" "PostmanRuntime/7.31.1"
 ::1 - - [08/Mar/2023:12:34:34 +0000] "GET /api/v1/bills HTTP/1.1" 200 67867 "-" "PostmanRuntime/7.31.1"
 ::1 - - [08/Mar/2023:13:08:36 +0000] "POST /api/v1/products/invoice/6400368310dace3b2a56bdbd HTTP/1.1" 200 17134 "-" "PostmanRuntime/7.31.1"
+::1 - - [08/Mar/2023:13:30:12 +0000] "GET /api/v1/wallets HTTP/1.1" 200 94 "-" "PostmanRuntime/7.31.1"
+::1 - - [08/Mar/2023:13:32:37 +0000] "POST /api/v1/products/invoice/64088e6314baf52a5629a692 HTTP/1.1" 200 17101 "-" "PostmanRuntime/7.31.1"
