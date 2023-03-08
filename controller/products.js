@@ -329,13 +329,10 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
       })
         .then(async (response) => {
           const counts = response.data.count;
-          const bill = await Bill.findById(req.params._id);
-          console.log(counts, "count")
-          console.log(response.status, "repsonse")
-          console.log(res.status, "res - repsonse")
-          
+          const bill = await Bill.findById(req.params._id); 
+          console.log(bill)
           if (counts === 0) {
-            res.status(200).json({
+            res.status(401).json({
               success: false,
             });
           } else {
