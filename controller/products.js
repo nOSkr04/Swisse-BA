@@ -304,7 +304,6 @@ exports.chargeTime = asyncHandler(async (req, res, next) => {
   });
 });
 exports.invoiceCheck = asyncHandler(async (req, res) => {
-  console.log(req.params)
   await axios({
     method: "post",
     url: "https://merchant.qpay.mn/v2/auth/token",
@@ -325,19 +324,20 @@ exports.invoiceCheck = asyncHandler(async (req, res) => {
           object_id: req.params.id,
           page_number: 1,
           page_limit: 100,
-          callback_url: `https://altanzaan.org/api/v1/products/check/challbacks/${req.params.id}`,
+          callback_url: `https://altanzaan.org/api/v1/products/check/challbacks/${req.params.id}/${req.params.numId}`,
         },
       })
         .then(async (response) => {
           const counts = response.data.count;
-          
+          const bill = req.params.numId
+          console.log(bill)
           if (counts === 0) {
             res.status(401).json({
               success: false,
             });
           } else {
-            // bill.isPayed = "Төлөгдсөн";
-            // bill.save();
+            bill.isPayed = "Төлөгдсөн";
+            bill.save();
             res.status(200).json({
               success: true,
             });
